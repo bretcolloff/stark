@@ -7,4 +7,5 @@ import os
 os.makedirs("Data/Test", exist_ok=True)
 
 # Download ETHBTC, with the default 1 hour intervals to our folder.
-get_symbol_history("Data/Test", "ETHBTC")
+#get_symbol_history("Data/Test", "ETHBTC")
+populate_data("Data/BTC_1H", "BTC")

@@ -19,7 +19,7 @@ class RSI_ADX(AlphaPrototype):
         run_order_history(self.orders, self.all_ticks, self.symbol_data, "rsi_adx", chunks=20)
 
     def print_results(self, symbol):
-        print ("processed", symbol)
+        print("processed", symbol, "profit:", self.balance - self.starting_balance)
 
     def pre_backtest_calculations(self, value):
         self.ema = TA.EMA(value)

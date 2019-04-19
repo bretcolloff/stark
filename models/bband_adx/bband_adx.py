@@ -16,7 +16,7 @@ class BBAND_ADX(AlphaPrototype):
         - RSI is less than 30."""
     
     def print_full_results(self):
-        run_order_history(self.orders, self.all_ticks, self.symbol_data, "rsi_adx")
+        run_order_history(self.orders, self.all_ticks, self.symbol_data, "bband_adx")
 
     def print_results(self, symbol):
         print ("processed", symbol)
@@ -36,5 +36,5 @@ class BBAND_ADX(AlphaPrototype):
             self.sell(symbol, data["close"][i], data["time"][i])
 
 
-strat = BBAND_ADX("Test", 100, data_root="../../Data/")
+strat = BBAND_ADX("BTC_1H", 100, data_root="../../Data/")
 strat.run_backtest()

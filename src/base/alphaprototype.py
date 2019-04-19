@@ -120,6 +120,9 @@ class AlphaPrototype(ABC):
             Whether the purchase was successful. True for success, False otherwise.
         """
 
+        # We want to store this signal whether the simulation used it or not.
+        self.orders[symbol].append({"symbol": symbol, "type": "buy", "price": price, "time": time})
+
         if self.holding:
             return False
 
@@ -135,7 +138,6 @@ class AlphaPrototype(ABC):
         self.balance = 0
         self.holding = True
         self.last_price = purchase_price
-        self.orders[symbol].append({"symbol": symbol, "type": "buy", "price": price, "time": time})
 
         return True
 
@@ -150,6 +152,10 @@ class AlphaPrototype(ABC):
         Returns:
             Whether the sale was successful. True for success, False otherwise.
         """
+
+        # We want to use this signal whether the simulation uses it or not.
+        self.orders[symbol].append({"symbol": symbol, "type": "sell", "price": price, "time": time})
+
         if not self.holding:
             return False
 
@@ -163,7 +169,6 @@ class AlphaPrototype(ABC):
         self.tokens = 0
         self.holding = False
         self.last_price = -1
-        self.orders[symbol].append({"symbol": symbol, "type": "sell", "price": price, "time": time})
 
         return True
 
