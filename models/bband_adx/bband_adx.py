@@ -1,8 +1,6 @@
+from finta import TA
 from src.base.alphaprototype import AlphaPrototype
 from src.run_order_history import run_order_history
-
-import talib as ta
-import numpy as np
 
 
 class BBAND_ADX(AlphaPrototype):
@@ -24,14 +22,12 @@ class BBAND_ADX(AlphaPrototype):
         print ("processed", symbol)
 
     def pre_backtest_calculations(self, value):
-        self.ema = ta.EMA(np.array(value["close"]))
-        high = np.array(value["high"])
-        low = np.array(value["low"])
-        close = np.array(value["close"])
-
-        self.adx = ta.ADX(high, low, close)
-        self.rsi = ta.RSI(close)
-        self.upper_bband, self.middle_bband, self.lower_bband = ta.BBANDS(close)
+        self.ema = TA.EMA(value)
+        self.adx = TA.ADX(value)
+        self.rsi = TA.RSI(value)
+        self.bbands = TA.BBANDS(value)
+        self.lower_bband = self.bbands["BB_UPPER"]
+        self.upper_bband = self.bbands["BB_LOWER"]
 
     def step(self, symbol, data, i):
         if data["close"][i] < self.lower_bband[i] and self.adx[i] > 25 and self.rsi[i] > 70:
@@ -40,5 +36,5 @@ class BBAND_ADX(AlphaPrototype):
             self.sell(symbol, data["close"][i], data["time"][i])
 
 
-strat = BBAND_ADX("1HETHBTC", 100, data_root="../../Data/")
+strat = BBAND_ADX("Test", 100, data_root="../../Data/")
 strat.run_backtest()

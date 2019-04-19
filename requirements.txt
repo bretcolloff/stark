@@ -1,0 +1,4 @@
+numpy
+finta
+python-binance
+matplotlib

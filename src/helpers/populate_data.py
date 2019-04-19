@@ -1,5 +1,5 @@
 from binance.client import Client
-from ..helpers.get_historical import get_historical_klines
+from src.helpers.get_historical import get_historical_klines
 
 import json
 

@@ -3,6 +3,7 @@ from collections import defaultdict
 
 import json
 import os
+import pandas as pd
 
 
 class AlphaPrototype(ABC):
@@ -79,14 +80,14 @@ class AlphaPrototype(ABC):
                     close.append(float(row[4]))
                     volume.append(float(row[5]))
 
-            self.symbol_data[symbol] = {
+            self.symbol_data[symbol] = pd.DataFrame.from_dict({
                 "time": time,
                 "open": open_values,
                 "high": high,
                 "low": low,
                 "close": close,
                 "volume": volume
-            }
+            })
 
     @abstractmethod
     def pre_backtest_calculations(self, value):
@@ -176,14 +177,14 @@ class AlphaPrototype(ABC):
             self.current_ticks = set()
 
             self.pre_backtest_calculations(value)
-            data_length = len(value["close"])
+            data_length = len(value["close"].values)
 
             for i in range(data_length):
-                self.current_ticks.add(value["time"][i])
+                self.current_ticks.add(value["time"].values[i])
                 self.step(key, value, i)
 
             # Add the value of the tokens on at the end, if there are any.
-            token_value = self.tokens * value["close"][-1]
+            token_value = self.tokens * value["close"].values[-1]
             self.balance += token_value
             self.all_ticks = self.all_ticks.union(self.current_ticks)
             self.print_results(key)

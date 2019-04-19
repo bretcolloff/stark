@@ -1,4 +1,6 @@
 from collections import defaultdict
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 import datetime
 import matplotlib.pyplot as plt
